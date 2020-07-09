@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" media="all" href="css/reset.css" /> <!-- reset css -->
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+
+<style>
+    body{ background-color: ivory; padding:20px;}
+    #obfuscated{border:1px solid blue;}
+    #canvas{border:1px solid red;}
+</style>
+
+<script>
+$(function(){
+
+    var img=new Image();
+    img.onload=start;
+    img.crossOrigin="anonymous";
+    img.src="lotus.jpg";
+
+    var verticalSlices=60;
+    var horizontalSlices=60;
+    var sliceCount=verticalSlices*horizontalSlices;
+    var sliceWidth,sliceHeight;
+    var slices=[];
+    var json;
+
+
+    function start(){
+
+        // vars for slice sizes
+        sliceWidth=img.width/verticalSlices;
+        sliceHeight=img.height/horizontalSlices;
+
+        // create a slices array to be used to scramble our image
+        for(var i=0;i<sliceCount;i++){ slices.push(i); }
+        slices=shuffle(slices);
+
+        // scramble the original image
+        var $obfuscatedImage=document.getElementById("obfuscated");
+        $obfuscatedImage.src=obfuscate(img,slices);
+
+
+        // create a JSON array used to descramble the image
+        slices.unshift(verticalSlices,horizontalSlices);
+        json=JSON.stringify(slices);
+
+    }
+
+    function obfuscate(img,slices){
+
+        var tempCanvas=document.createElement("canvas");
+        var tempCtx=tempCanvas.getContext('2d');
+        tempCanvas.width=img.width;
+        tempCanvas.height=img.height;
+
+        for(var i=0;i<slices.length;i++){
+            var s=slices[i];
+            var row=parseInt(s/verticalSlices);
+            var col=s-row*verticalSlices;
+            var x=col*sliceWidth;
+            var y=row*sliceHeight;
+
+            var canvasRow=parseInt(i/verticalSlices);
+            var canvasCol=i-canvasRow*verticalSlices;
+            var canvasX=canvasCol*sliceWidth;
+            var canvasY=canvasRow*sliceHeight;
+
+            tempCtx.drawImage(img,
+                x,y,sliceWidth,sliceHeight,
+                canvasX,canvasY,sliceWidth,sliceHeight);
+        }
+        return(tempCanvas.toDataURL());
+    }
+
+
+    function shuffle(array) {
+      var currentIndex = array.length,temporaryValue,randomIndex;
+
+      while (0 !== currentIndex) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+      return array;
+    }
+
+}); // end $(function(){});
+</script>
+
+</head>
+
+<body>
+    <p>Before scrambling</p>
+    <img src="lotus.jpg"><br>
+    <p>After scrambling</p>
+    <img id="obfuscated" width=300 height=300>
+</body>
+</html>

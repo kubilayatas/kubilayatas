@@ -8,9 +8,9 @@ angular.module('image.drawing', [])
 
         defaultBrushName: 'pencil',
 
-        activeBrushName: false,
+        activeBrushName: true,
 
-        isEnabled: false,
+        isEnabled: true,
 
         params: {
             shadowColor: '#1E89E6',

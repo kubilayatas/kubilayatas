@@ -44,32 +44,31 @@
                     </ul>
                 </section>
             </section>
-
             <section ng-hide="!loading" id="spinner">
                 <md-progress-circular class="md-spinner" md-diameter="100" md-mode="indeterminate"></md-progress-circular>
             </section>
 
-            <section id="left-sidebar" ed-tabs="basics" class="md-whiteframe-z1">
-                <div id="sidebar-toggler" ed-toggle-sidebar>
+            <section id="left-sidebar" ed-tabs="drawing" class="md-whiteframe-z1" >
+                <div id="sidebar-toggler" ed-toggle-sidebar >
                     <md-button class="md-fab md-primary" aria-label="Toggle Sidebar">
                         <i class="mdi mdi-edit show-icon"></i>
                         <i class="mdi mdi-close close-icon"></i>
                     </md-button>
                 </div>
-                <div id="navigation-bar">
-                    <div data-activates="basics" class="nav-item">
+                <div id="navigation-bar" style="display:none">
+                    <!--<div data-activates="basics" class="nav-item">
                         <i class="mdi mdi-image"></i>
                         <div class="title">BASICS</div>
                     </div>
                     <div data-activates="text" class="nav-item">
                         <i class="mdi mdi-format-bold"></i>
                         <div class="title pull-up">TEXT</div>
-                    </div>
+                    </div>-->
                     <div data-activates="drawing" class="nav-item">
                         <i class="mdi mdi-brush"></i>
                         <div class="title">DRAWING</div>
                     </div>
-                    <div data-activates="filters" class="nav-item">
+                    <!--<div data-activates="filters" class="nav-item">
                         <i class="mdi mdi-brightness-6"></i>
                         <div class="title">FILTERS</div>
                     </div>
@@ -80,7 +79,7 @@
                     <div data-activates="stickers" class="nav-item">
                         <i class="mdi mdi-favorite"></i>
                         <div class="title pull-up">STICKERS</div>
-                    </div>
+                    </div>-->
                 </div>
                 <div id="tabs">
                     <section id="basics" data-index="1" class="tab">
@@ -321,7 +320,7 @@
                         </div>
                     </section>
                     <section id="drawing" class="tab" data-index="3" ng-controller="DrawingController">
-                        <h2 class="tab-title">Pick a Brush</h2>
+                        <h2 class="tab-title" >Pick a Brush</h2>
                         <div id="brushes">
                             <div ng-repeat="brush in drawing.availableBrushes" ng-class="{ active: drawing.activeBrushName == brush }" class="brush" ng-click="changeBrush(brush, $event)">
                                 <img title="{{ brush }}" class="img-responsive" ng-src="assets/images/brushes/{{brush}}.png"/>
@@ -346,7 +345,7 @@
                                     <input ng-model="drawing.params.brushColor" ed-color-picker="drawing.setProperty('color', color)" type="text"/>
                                 </div>
 
-                                <div class="heading-with-switcher">
+                                <!--<div class="heading-with-switcher">
                                     <h3>Shadow</h3>
                                     <md-switch class="md-switch" ng-model="drawing.params.enableShadow" ng-change="drawing.toggleShadow(drawing.params.enableShadow)" aria-label="Enable Shadow"></md-switch>
                                 </div>
@@ -378,7 +377,7 @@
                                 <div class="colorpicker">
                                     <div class="colorpicker-label"><span>Color</span></div>
                                     <input ng-disabled="!drawing.params.enableShadow" ng-model="drawing.params.shadowColor" start-color="{{ drawing.params.shadowColor }}" ed-color-picker="drawing.setShadowProperty('color', color)" type="text"/>
-                                </div>
+                                </div>-->
 
                                 <div class="buttons">
                                     <md-button ng-click="finishAddingDrawingsToCanvas()" class="md-primary md-raised">Save</md-button>
@@ -574,6 +573,7 @@
             </div>
 
             <script src="assets/js/scripts.min.js?v23"></script>
+			<script src="assets/js/deneme.js?v23"></script>
 
             <script type="application/ng-template" id="gradient-sheet-template">
                 <md-bottom-sheet class="bottom-sheet gradients-sheet">
